@@ -21,7 +21,7 @@ library(RStoolbox)
 folder = "D:\\IMAGES\\AVO_Images\\AVO_PScope4\\WY2017_AVO_PScope4\\images\\use"
 file = "20161105_190326_0c75_3B_AnalyticMS"
 file_type = ".tif"
-plot_type = "NDWI"
+plot_type = "NDVI"
 
 ## Enters defined Folder
 setwd(folder);

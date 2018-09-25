@@ -20,7 +20,7 @@ library(RStoolbox)
 ##Edit these parameters
 folder = "D:\\IMAGES\\AVO_Images\\AVO_PScope4\\WY2017_AVO_PScope4\\images\\use"
 file_type = ".tif"
-plot_type = "NDWI"
+plot_type = "NDVI"
 
 ## Enters defined Folder
 setwd(folder);
@@ -40,6 +40,9 @@ lapply(files, function(file) {
   ## Calculate Indices
   # Uses Bands 3 (RED) and 4 (NIR)
   output <- spectralIndices(file_brick, blue = paste("X",file, ".1", sep=""), green = paste("X",file, ".2", sep=""),red = paste("X",file, ".3", sep=""), nir = paste("X",file, ".4", sep=""), indices = plot_type)
+  
+  ## Save Output
+  outfile <- writeRaster(output, filename=paste(file,"-",plot_type,file_type, sep=""), format="GTiff", overwrite=TRUE,options=c("INTERLEAVE=BAND","COMPRESS=LZW"))
   
   ## Plot to PDF
   pdf(paste(file,"-",plot_type,".pdf", sep=""))
