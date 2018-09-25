@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatLongFixer", "LatLongFixer\LatLongFixer.csproj", "{7E769532-0360-46D9-84C8-573246F1801D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatLongScrubber", "LatLongScrubber\LatLongScrubber.csproj", "{6F28195D-31D4-47E0-8177-B1EBA3C4BF23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7E769532-0360-46D9-84C8-573246F1801D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E769532-0360-46D9-84C8-573246F1801D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E769532-0360-46D9-84C8-573246F1801D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E769532-0360-46D9-84C8-573246F1801D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F28195D-31D4-47E0-8177-B1EBA3C4BF23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F28195D-31D4-47E0-8177-B1EBA3C4BF23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F28195D-31D4-47E0-8177-B1EBA3C4BF23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F28195D-31D4-47E0-8177-B1EBA3C4BF23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {71AC6E4E-B4F3-4855-88C6-9D2FA4F7653F}
+		SolutionGuid = {A201ADED-2553-42F9-8014-5B9B3B50DDB8}
 	EndGlobalSection
 EndGlobal
