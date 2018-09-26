@@ -83,8 +83,13 @@ namespace LatLongFixer
                 line = lines[i].Split('	');
                 if (Math.Abs(double.Parse(line[1]) - double.Parse(prev_line[1])) > 0.0000000001)
                 {
-                    output += lines[i];
+                    output += lines[i] + "\n";
 
+                }
+                else
+                {
+                    line = lines[i].Split('	');
+                    output += line[0] + "	0.0	0.0	0.0	0.0	0.0	0.0	0.0	0.0\n";
                 }
                 if (i % 100 == 0)
                 {
