@@ -18,10 +18,10 @@ library(tiff)
 library(RStoolbox)
 
 ##Edit these parameters
-folder = "D:\\IMAGES\\AVO_Images\\AVO_PScope4\\WY2017_AVO_PScope4\\images\\use"
-file = "20161105_190326_0c75_3B_AnalyticMS"
+folder = "D:\\IMAGES\\AVO_Images\\AVO_PScope4\\WY2018_AVO_PScope4\\images\\use"
+file = "20180328_181215_100c_3B_AnalyticMS"
 file_type = ".tif"
-plot_type = "NDVI"
+plot_type = "NDWI"
 
 ## Enters defined Folder
 setwd(folder);
@@ -34,7 +34,6 @@ file_brick=brick(paste(file, file_type, sep=""))
 output <- spectralIndices(file_brick, blue = paste("X",file, ".1", sep=""), green = paste("X",file, ".2", sep=""),red = paste("X",file, ".3", sep=""), nir = paste("X",file, ".4", sep=""), indices = plot_type)
   
 ## Plot to PDF
-pdf(paste(file,"-",plot_type,".pdf", sep=""))
-plot(output)
-dev.off()
+outfile <- writeRaster(output, filename=paste(file,"-",plot_type,file_type, sep=""), format="GTiff", overwrite=TRUE,options=c("INTERLEAVE=BAND","COMPRESS=LZW"))
+
 
