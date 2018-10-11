@@ -1,4 +1,13 @@
-﻿using ImageMagick;
+﻿/*
+ *  Author: Brian Hungerman
+ *  
+ *  Runtime note: At 600px Width, 900 images, takes 35~ minutes to run
+ * 
+ * 
+ */ 
+
+
+using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.IO;
