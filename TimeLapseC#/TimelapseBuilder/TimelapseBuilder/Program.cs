@@ -1,9 +1,11 @@
 ﻿/*
  *  Author: Brian Hungerman
  *  
- *  Runtime note: At 600px Width, 900 images, takes 35~ minutes to run
- * 
- * 
+ *  This application generates a GIF out of any set of images in a defined subfolder to the executable's current directory
+ *  
+ *  The width (in px) and frame rate (in ms) of the resulting GIF can be controlled
+ *  
+ *  Runtime note: At 600px Width, 900 images, takes 35~ minutes to process GIF, 35~ seconds to convert to MP4
  */ 
 
 
