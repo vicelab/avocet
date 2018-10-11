@@ -30,16 +30,17 @@ namespace TimelapseBuilder
 
             /* Read data */
             string folder = "/input";
-
+            int speed = 2;
+            int width = 600;
             //while (true)
             {
                 Console.Read();
-                generateGIF(folder);
+                generateGIF(folder, speed, width);
             }
         }
 
         /* Give range of values of a given set of data */
-        static void generateGIF(string folder)
+        static void generateGIF(string folder, int speed, int width)
         {
 
             string searchFolder = Directory.GetCurrentDirectory() + "/ExampleData";
@@ -55,30 +56,28 @@ namespace TimelapseBuilder
                 {
                     MagickImageInfo info = new MagickImageInfo(files[i]);
                     DateTime written_time = new FileInfo(files[i]).LastWriteTime;
-                   // Console.WriteLine( written_time.Hour);
                     if (written_time.Hour <= 5 || written_time.Hour >= 20) //remove 8pm to 5am
                     {
-                        Console.WriteLine(((i * 1.0) / number_images).ToString("p") + ": Skipping " + written_time);
+                        Console.WriteLine(((i * 1.0) / number_images).ToString("p") + ": Skip " + written_time);
                         continue;
                     }
-                    Console.WriteLine(((i * 1.0) / number_images).ToString("p") + ": Adding " + written_time);
+                    Console.WriteLine(((i * 1.0) / number_images).ToString("p") + ": Add  " + written_time);
                    
                     collection.Add(files[i]);
-                    collection[image_index].Resize(600, 0);
-                    collection[image_index].AnimationDelay = 2;
+                    collection[image_index].Resize(width, 0);
+                    collection[image_index].AnimationDelay = speed;
                     image_index++;
                 }
-                Console.WriteLine("Added Images");
-                // Optionally reduce colors
-                //    QuantizeSettings settings = new QuantizeSettings();
-                //   settings.Colors = 256;
-                //  collection.Quantize(settings);
-            
+
+                Console.Clear();
+                Console.WriteLine("Added Images, Optimizing... \n (this make take some time)");           
                 collection.Optimize();
-                Console.WriteLine("Optimized");
+
+                Console.Clear();
+                Console.WriteLine("Optimized, Outputting... \n (this may take some time)");
                 collection.Write("output.gif");
-                //ffmpeg -i animated.gif -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" video.mp4
-                Console.WriteLine("Outputted");
+
+                Console.WriteLine("Outputted, Closing");
             }
         }
 
