@@ -41,34 +41,35 @@ namespace TimelapseBuilder
             using (MagickImageCollection collection = new MagickImageCollection())
             {
                 int number_images = files.Length;
-                                       //MagickImage[] images = new MagickImage[number_images];
-                                       // Console.WriteLine(files.Length);
+                int image_index = 0;
                 for (int i = 0; i < number_images; i++)
                 {
-
-                    //image.Resize(300, 0);
-
-                    Console.WriteLine(((i * 1.0) / number_images).ToString("p") + ": Adding " + files[i]);
+                    MagickImageInfo info = new MagickImageInfo(files[i]);
+                    DateTime written_time = new FileInfo(files[i]).LastWriteTime;
+                   // Console.WriteLine( written_time.Hour);
+                    if (written_time.Hour <= 5 || written_time.Hour >= 20) //remove 8pm to 5am
+                    {
+                        Console.WriteLine(((i * 1.0) / number_images).ToString("p") + ": Skipping " + written_time);
+                        continue;
+                    }
+                    Console.WriteLine(((i * 1.0) / number_images).ToString("p") + ": Adding " + written_time);
+                   
                     collection.Add(files[i]);
-                    collection[i].Resize(300, 0);
-                    collection[i].AnimationDelay = 5;
-
-
-
+                    collection[image_index].Resize(600, 0);
+                    collection[image_index].AnimationDelay = 2;
+                    image_index++;
                 }
                 Console.WriteLine("Added Images");
                 // Optionally reduce colors
                 //    QuantizeSettings settings = new QuantizeSettings();
                 //   settings.Colors = 256;
                 //  collection.Quantize(settings);
-
-                // Optionally optimize the images (images should have the same size).
-                //   collection.Optimize();
+            
                 collection.Optimize();
                 Console.WriteLine("Optimized");
-                // Save gif
                 collection.Write("output.gif");
-                Console.WriteLine("outputted");
+                //ffmpeg -i animated.gif -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" video.mp4
+                Console.WriteLine("Outputted");
             }
         }
 
