@@ -39,12 +39,13 @@ namespace TimelapseBuilder
 
             Console.WriteLine("~ Press ENTER to begin");///Enter file location and press ENTER.\n~ (HARDCODED TO ./INPUT/)");
 
-
+            combineImages();
             Console.Read();
 
 
             /* Run */
             generateGIF(folder, speed, width);
+
             
         }
 
@@ -134,19 +135,36 @@ namespace TimelapseBuilder
             using (MagickImageCollection images = new MagickImageCollection())
             {
                 // Add the first image
-                MagickImage first = new MagickImage("Snakeware.png");
+                MagickImage first = new MagickImage("test.jpg");
                 images.Add(first);
-
-                // Add the second image
-                MagickImage second = new MagickImage("Snakeware.png");
-                images.Add(second);
-
-                // Create a mosaic from both images
-                using (IMagickImage result = images.Mosaic())
+       
+                using (MagickImage image = new MagickImage(new MagickColor("#ff00ff"), 512, 128))
                 {
-                    // Save the result
-                    result.Write("Mosaic.png");
+                    new Drawables()
+                      // Draw text on the image
+                      .FontPointSize(72)
+                      .Font("Comic Sans")
+                      .StrokeColor(new MagickColor("yellow"))
+                      .FillColor(MagickColors.Orange)
+                      .TextAlignment(TextAlignment.Center)
+                      .Text(256, 64, "Magick.NET")
+                      // Add an ellipse
+                      .StrokeColor(new MagickColor(0, Quantum.Max, 0))
+                      .FillColor(MagickColors.SaddleBrown)
+                      .Ellipse(256, 96, 192, 8, 0, 360)
+                      .Draw(image);
+
+                    images.Add(image);
+
+                    // Create a mosaic from both images
+                    using (IMagickImage result = images.Mosaic())
+                    {
+                        // Save the result
+                        result.Write("Mosaic.png");
+                    }
                 }
+
+               
             }
         }
     }
