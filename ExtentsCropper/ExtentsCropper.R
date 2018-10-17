@@ -26,9 +26,10 @@ file_type = ".tif"
 plot_type = "NDWI"
 
 ## Grab shapefile
-# aoi_boundary = shapefile(shape_file)
+
+# Hardcoded conversion from:
+# -120.39796829223633, -120.35119056701662,37.38939058570166, 37.4349990269749);
 new_extent <- extent(730353.61, 734353.22, 4141247.64,4146424.20)
-#-120.39796829223633, -120.35119056701662,37.38939058570166, 37.4349990269749);
 class(new_extent)
 setwd(folder);
 
@@ -44,26 +45,11 @@ lapply(files, function(file) {
   ## RasterBrick-ize File
   file_brick=brick(paste(file, file_type, sep=""))
   file_brick <- crop(x = file_brick, y = new_extent)
-  file_brick
   output <- spectralIndices(file_brick, blue = paste("X",file, ".1", sep=""), green = paste("X",file, ".2", sep=""),red = paste("X",file, ".3", sep=""), nir = paste("X",file, ".4", sep=""), indices = plot_type)
   
   ## Save Output
   outfile <- writeRaster(output, filename=paste(file,"-",plot_type,file_type, sep=""), format="GTiff", overwrite=TRUE,options=c("INTERLEAVE=BAND","COMPRESS=LZW"))
-  #img <- readTIFF(paste(file,"-",plot_type,file_type, sep=""), native=TRUE)
-  #writeJPEG(img, target = "Converted.jpeg", quality = 1)
-  #img <- readTIFF("origin.tiff", native=TRUE)
-  #aoi is a shape file, chm is a raster*
-  #CHM_HARV_Cropped <- crop(x = file_brick, y = new_extent) #as(aoi_boundary, "Spatial"))
-  #CHM_HARV_Cropped
-  #CHM_HARV_Cropped_df <- as.data.frame(CHM_HARV_Cropped, xy = TRUE)
-  
-  ## Save Output
-  # outfile <- writeRaster(output, filename=paste(file,"-",plot_type,file_type, sep=""), format="GTiff", overwrite=TRUE,options=c("INTERLEAVE=BAND","COMPRESS=LZW"))
-  
-  ## Plot to PDF
-  #pdf(paste(file,".pdf", sep=""))
-  #plot(CHM_HARV_Cropped)
-  #dev.off()
+
 })
 
 
