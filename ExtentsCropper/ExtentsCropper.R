@@ -12,16 +12,18 @@
 # install.packages("raster")
 # install.packages("tiff")
 # install.packages("RStoolbox")
+# install.packages("jpeg")
+# install.packages("tiff")
 library(ggplot2)
 library(raster)
 library(tiff)
 library(RStoolbox)
 
 ##Edit these parameters
-folder = "D:\\IMAGES\\Testing"
+folder = "D:\\IMAGES\\AVO_Images\\AVO_PScope4\\WY2018_AVO_PScope4\\images\\use"
 shape_file = "D:\\IMAGES\\MAPFILES\\AVO_map.shp"
 file_type = ".tif"
-plot_type = "NDVI"
+plot_type = "NDWI"
 
 ## Grab shapefile
 # aoi_boundary = shapefile(shape_file)
@@ -47,7 +49,9 @@ lapply(files, function(file) {
   
   ## Save Output
   outfile <- writeRaster(output, filename=paste(file,"-",plot_type,file_type, sep=""), format="GTiff", overwrite=TRUE,options=c("INTERLEAVE=BAND","COMPRESS=LZW"))
-  
+  #img <- readTIFF(paste(file,"-",plot_type,file_type, sep=""), native=TRUE)
+  #writeJPEG(img, target = "Converted.jpeg", quality = 1)
+  #img <- readTIFF("origin.tiff", native=TRUE)
   #aoi is a shape file, chm is a raster*
   #CHM_HARV_Cropped <- crop(x = file_brick, y = new_extent) #as(aoi_boundary, "Spatial"))
   #CHM_HARV_Cropped
