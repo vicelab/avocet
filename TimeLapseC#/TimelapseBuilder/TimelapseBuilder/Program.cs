@@ -31,7 +31,7 @@ namespace TimelapseBuilder
             Console.WriteLine("~ Press ENTER to begin");///Enter file location and press ENTER.\n~ (HARDCODED TO ./INPUT/)");
 
             /* Init Variables */
-            string folder = "ExampleData";
+            string folder = "PlanetData";
             int speed = 2;
             int width = 600;
             
