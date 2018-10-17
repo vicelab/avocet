@@ -30,22 +30,23 @@ namespace TimelapseBuilder
             Console.WriteLine(filler + "\n~ Welcome to the Timelapse Builder\n" + filler);
             Console.WriteLine("~ Press ENTER to begin");///Enter file location and press ENTER.\n~ (HARDCODED TO ./INPUT/)");
 
-            /* Read data */
-            string folder = "/input";
+            /* Init Variables */
+            string folder = "ExampleData";
             int speed = 2;
             int width = 600;
-            //while (true)
-            {
-                Console.Read();
-                generateGIF(folder, speed, width);
-            }
+            
+            Console.Read();
+            
+            /* Run */
+            generateGIF(folder, speed, width);
+            
         }
 
         /* Give range of values of a given set of data */
         static void generateGIF(string folder, int speed, int width)
         {
 
-            string searchFolder = Directory.GetCurrentDirectory() + "/ExampleData";
+            string searchFolder = Directory.GetCurrentDirectory() + "/" + folder;
             Console.WriteLine(searchFolder);
             var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp" };
             var files = getImages(searchFolder, filters, false);
