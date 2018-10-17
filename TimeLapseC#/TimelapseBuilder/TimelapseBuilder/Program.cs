@@ -28,18 +28,38 @@ namespace TimelapseBuilder
         {
             /* Get Introduction */
             Console.WriteLine(filler + "\n~ Welcome to the Timelapse Builder\n" + filler);
+           
+            /* Init Variables */
+            string folder = "TestingData";
+            int speed = 4;//2;
+            int width = 600;
+
+            /* If there are any TIF images, converts to PNG first */
+            //convertTIFtoPNG(folder);
+
             Console.WriteLine("~ Press ENTER to begin");///Enter file location and press ENTER.\n~ (HARDCODED TO ./INPUT/)");
 
-            /* Init Variables */
-            string folder = "PlanetData";
-            int speed = 2;
-            int width = 600;
-            
+
             Console.Read();
-            
+
+
             /* Run */
             generateGIF(folder, speed, width);
             
+        }
+
+        static void convertTIFtoPNG(string folder)
+        {
+            DirectoryInfo d = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\" + folder);
+            foreach (var file in d.GetFiles("*.tif"))
+            {
+                string newName = file.FullName.Substring(0, file.FullName.Length - 3) + "png";
+                Console.WriteLine(newName);
+                System.Drawing.Bitmap.
+                FromFile(file.FullName).
+                Save(newName,
+                System.Drawing.Imaging.ImageFormat.Png);
+            }            
         }
 
         /* Give range of values of a given set of data */
@@ -73,12 +93,24 @@ namespace TimelapseBuilder
                 }
 
                 Console.Clear();
-                Console.WriteLine("Added Images, Optimizing... \n (this make take some time)");           
-                collection.Optimize();
-
+                Console.WriteLine("Added Images, Optimizing... \n (this make take some time)");
+                //collection.Optimize();
+                /*
+                 * foreach (MagickImage image in collection)
+    {
+        image.Resize(200, 0);
+    }*/
                 Console.Clear();
                 Console.WriteLine("Optimized, Outputting... \n (this may take some time)");
-                collection.Write("output.gif");
+                string outputName = "";
+
+                Random rnd = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+                    outputName += (char)(rnd.Next(97, 122));
+                }
+                outputName += ".gif";
+                collection.Write(outputName);
 
                 Console.WriteLine("Outputted, Closing");
             }
