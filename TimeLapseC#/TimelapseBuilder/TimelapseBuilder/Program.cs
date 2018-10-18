@@ -6,6 +6,7 @@
  *  The width (in px) and frame rate (in ms) of the resulting GIF can be controlled
  *  
  *  Runtime note: At 600px Width, 900 images, takes 35~ minutes to process GIF, 35~ seconds to convert to MP4
+ * 
  */ 
 
 
@@ -23,6 +24,7 @@ namespace TimelapseBuilder
     {
 
         static string filler = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+        static List<String> filesFound = new List<String>();
 
         static void Main(string[] args)
         {
@@ -30,21 +32,26 @@ namespace TimelapseBuilder
             Console.WriteLine(filler + "\n~ Welcome to the Timelapse Builder\n" + filler);
            
             /* Init Variables */
-            string folder = "TestingData";
+            string folder = "PlanetData";
             int speed = 4;//2;
             int width = 600;
 
             /* If there are any TIF images, converts to PNG first */
+            /* This shouldn't be the case anymore since the R script can output as png*/
             //convertTIFtoPNG(folder);
+
+            /* Add timestamps to each image?*/
+            //timeStamp(folder);
+
+            folder = "StampedData";
 
             Console.WriteLine("~ Press ENTER to begin");///Enter file location and press ENTER.\n~ (HARDCODED TO ./INPUT/)");
 
-            combineImages();
+            //combineImages();
             Console.Read();
 
-
             /* Run */
-            generateGIF(folder, speed, width);
+            generateGIF("StampedData", speed, width);
 
             
         }
@@ -67,8 +74,7 @@ namespace TimelapseBuilder
         static void generateGIF(string folder, int speed, int width)
         {
 
-            string searchFolder = Directory.GetCurrentDirectory() + "/" + folder;
-            Console.WriteLine(searchFolder);
+            string searchFolder = Directory.GetCurrentDirectory() + "\\" + folder;
             var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp" };
             var files = getImages(searchFolder, filters, false);
 
@@ -95,12 +101,10 @@ namespace TimelapseBuilder
 
                 Console.Clear();
                 Console.WriteLine("Added Images, Optimizing... \n (this make take some time)");
-                //collection.Optimize();
-                /*
-                 * foreach (MagickImage image in collection)
-    {
-        image.Resize(200, 0);
-    }*/
+                
+                collection.Optimize();
+                
+               
                 Console.Clear();
                 Console.WriteLine("Optimized, Outputting... \n (this may take some time)");
                 string outputName = "";
@@ -118,17 +122,76 @@ namespace TimelapseBuilder
         }
 
         static string[] getImages(string searchFolder, string[] filters, bool isRecursive)
-        {
-            List<String> filesFound = new List<String>();
+        {           
             var searchOption = isRecursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
             foreach (var filter in filters)
             {
                 filesFound.AddRange(Directory.GetFiles(searchFolder, String.Format("*.{0}", filter), searchOption));
             }
+            for (int i = 0; i < filesFound.Count; i++)
+            {
+                int index = filesFound[i].Split('\\').Length - 1;
+                Console.WriteLine(filesFound[i].Split('\\')[index]);                
+            }
             return filesFound.ToArray();
         }
 
-        
+        static void timeStamp(string folder)
+        {
+            string searchFolder = Directory.GetCurrentDirectory() + "\\" + folder;
+            var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp" };
+            var files = getImages(searchFolder, filters, false);
+
+            using (MagickImageCollection collection = new MagickImageCollection())
+            {
+                int number_images = files.Length;
+                for (int i = 0; i < number_images; i++)
+                {
+                    MagickImageInfo info = new MagickImageInfo(files[i]);
+                    Console.WriteLine(((i * 1.0) / number_images).ToString("p") + ": Added");
+
+                    using (MagickImageCollection images = new MagickImageCollection())
+                    {
+                        MagickImage first = new MagickImage(files[i]);
+
+                        first.Resize(new MagickGeometry(0, 0, 600, 600));
+                        Console.WriteLine(first.Width + ", " + first.Height);
+
+                        images.Add(first);
+
+                        using (MagickImage image = new MagickImage(new MagickColor(255,255,255,0), 600, 600))
+                        {
+
+                            int index = filesFound[i].Split('\\').Length - 1;
+                            Console.WriteLine(filesFound[i].Split('\\')[index]);
+
+                            new Drawables()
+                              // Draw text on the image
+                              .FontPointSize(72)
+                              .Font("Comic Sans")
+                              .StrokeColor(new MagickColor("black"))
+                              .FillColor(MagickColors.Orange)
+                              .TextAlignment(TextAlignment.Left)
+                              .Text(0, 504, filesFound[i].Split('\\')[index].Split('_')[0])
+                              // Add an ellipse
+                              .Draw(image);
+
+                            images.Add(image);
+
+                            // Create a mosaic from both images
+                            using (IMagickImage result = images.Mosaic())
+                            {
+                                // Save the result
+                                result.Write(Directory.GetCurrentDirectory() + "\\StampedData\\" + filesFound[i].Split('\\')[index]);
+                            }
+                        }
+
+                    }
+                }
+
+            }
+
+        }
 
         static void combineImages()
         {
@@ -136,6 +199,7 @@ namespace TimelapseBuilder
             {
                 // Add the first image
                 MagickImage first = new MagickImage("test.jpg");
+
                 images.Add(first);
        
                 using (MagickImage image = new MagickImage(new MagickColor("#ff00ff"), 512, 128))
