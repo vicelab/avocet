@@ -210,11 +210,11 @@ namespace TimelapseBuilder
 
                             int index = filesFound[i].Split('\\').Length - 1;
                             // Console.WriteLine(filesFound[i].Split('\\')[index]);
-                            int month_int = int.Parse(filesFound[i].Split('\\')[index].Split('-')[1]);//filesFound[i].Split('\\')[index].Substring(4, 2));
-                            string year = filesFound[i].Split('\\')[index].Split('_')[1].Substring(0, 4);//filesFound[i].Split('\\')[index].Substring(0, 4);//.Split('_')[1].Substring(0, 4);
-                                                                         //filesFound[i].Split('\\')[index].Split('-')[1];
-                                                                         //  Console.WriteLine("y:" + year + ", m:" + month);
-                                                                         //   Console.Read();
+                            int month_int = int.Parse(filesFound[i].Split('\\')[index].Substring(4, 2)); //filesFound[i].Split('\\')[index].Split('-')[1]);//
+                            string year = filesFound[i].Split('\\')[index].Substring(0, 4);//.Split('_')[1].Substring(0, 4); filesFound[i].Split('\\')[index].Split('_')[1].Substring(0, 4);//
+                                                                                           //filesFound[i].Split('\\')[index].Split('-')[1];
+                                                                                           //  Console.WriteLine("y:" + year + ", m:" + month);
+                                                                                           //   Console.Read();
                             string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month_int);
                             string text = month + "\n" + year + "\n";
                             if (month_int >= 10)
