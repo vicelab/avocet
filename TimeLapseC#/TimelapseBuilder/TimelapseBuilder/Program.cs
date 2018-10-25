@@ -25,33 +25,66 @@ namespace TimelapseBuilder
 
         static string filler = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
         static List<String> filesFound = new List<String>();
+        static int time_bounds_low = 5;
+        static int time_bounds_high = 20;
+        static bool using_time_bounds = false;
+        static bool using_one_a_day = false;
+        static bool using_three_a_day = false;
 
         static void Main(string[] args)
         {
-            /* Get Introduction */
-            Console.WriteLine(filler + "\n~ Welcome to the Timelapse Builder\n" + filler);
-           
             /* Init Variables */
             string folder = "PlanetData";
             int speed = 4;//2;
             int width = 600;
+
+            /* Get Introduction */
+            Console.WriteLine(filler + "\n~ Welcome to the Timelapse Builder\n" + filler);
+
+            Console.WriteLine("Enter desired speed: \n(\"2\" ~ game camera, \"20\" ~ satellite imagery)");
+            speed = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter target folder: \n(\"C:\\Users\\Example\\Pictures\\Avocet\"");
+            folder = Console.ReadLine();
 
             /* If there are any TIF images, converts to PNG first */
             /* This shouldn't be the case anymore since the R script can output as png*/
             //convertTIFtoPNG(folder);
 
             /* Add timestamps to each image?*/
-            //timeStamp(folder);
-
-            folder = "StampedData";
-
-            Console.WriteLine("~ Press ENTER to begin");///Enter file location and press ENTER.\n~ (HARDCODED TO ./INPUT/)");
-
-            //combineImages();
+            Console.WriteLine("Do you want timestamps? (y/N):");
+            if (Console.ReadLine().ToUpper() == "Y")
+            {
+            //    timeStamp(folder);
+            }
+            Console.WriteLine("Do you want to limit the frames per day? (y/N):");
+            if (Console.ReadLine().ToUpper() == "Y")
+            {
+                Console.WriteLine("Options:\n(\"daytime\", \"one-a-day\", \"three-a-day\"):");
+                
+                string input = Console.ReadLine();
+                switch (input)
+                {
+                    case "daytime":
+                        Console.WriteLine("Checking for daytime images...");
+                        using_time_bounds = true;
+                        break;
+                    case "one-a-day":
+                        Console.WriteLine("Checking for daily images...");
+                        using_one_a_day = true;
+                        break;
+                    case "three-a-day":
+                        Console.WriteLine("Checking for images three times a day...");
+                        using_three_a_day = true;
+                        break;
+                }
+                //    timeStamp(folder);
+            }
+            Console.WriteLine("~ Press ENTER to begin");
             Console.Read();
 
             /* Run */
-            generateGIF("StampedData", speed, width);
+            generateGIF(folder, speed, width);
 
             
         }
@@ -74,7 +107,7 @@ namespace TimelapseBuilder
         static void generateGIF(string folder, int speed, int width)
         {
 
-            string searchFolder = Directory.GetCurrentDirectory() + "\\" + folder;
+            string searchFolder = folder; //Directory.GetCurrentDirectory() + "\\" + folder;
             var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp" };
             var files = getImages(searchFolder, filters, false);
 
@@ -86,10 +119,20 @@ namespace TimelapseBuilder
                 {
                     MagickImageInfo info = new MagickImageInfo(files[i]);
                     DateTime written_time = new FileInfo(files[i]).LastWriteTime;
-                    if (written_time.Hour <= 5 || written_time.Hour >= 20) //remove 8pm to 5am
+                    if (using_time_bounds && (written_time.Hour <= time_bounds_low || written_time.Hour >= time_bounds_high)) //remove 8pm to 5am
                     {
-                        Console.WriteLine(((i * 1.0) / number_images).ToString("p") + ": Skip " + written_time);
                         continue;
+                    }
+                    if (using_one_a_day && (written_time.Hour != 12 || written_time.Minute > 10))
+                    {
+                        continue;
+                    }
+                    if (using_three_a_day)
+                    {
+                        if (written_time.Minute > 10) continue;
+                        if (written_time.Hour < 9) continue;
+                        if (written_time.Hour > 15) continue;
+                        if (written_time.Hour == 10 || written_time.Hour == 11 || written_time.Hour == 13 || written_time.Hour == 14) continue;
                     }
                     Console.WriteLine(((i * 1.0) / number_images).ToString("p") + ": Add  " + written_time);
                    
@@ -138,7 +181,7 @@ namespace TimelapseBuilder
 
         static void timeStamp(string folder)
         {
-            string searchFolder = Directory.GetCurrentDirectory() + "\\" + folder;
+            string searchFolder = folder;
             var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp" };
             var files = getImages(searchFolder, filters, false);
 
