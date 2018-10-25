@@ -13,6 +13,7 @@
 using ImageMagick;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,11 +26,14 @@ namespace TimelapseBuilder
 
         static string filler = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
         static List<String> filesFound = new List<String>();
+        static int water_year = 2008;
         static int time_bounds_low = 5;
         static int time_bounds_high = 20;
         static bool using_time_bounds = false;
         static bool using_one_a_day = false;
         static bool using_three_a_day = false;
+
+        static bool if_stamped = false;
 
         static void Main(string[] args)
         {
@@ -55,7 +59,10 @@ namespace TimelapseBuilder
             Console.WriteLine("Do you want timestamps? (y/N):");
             if (Console.ReadLine().ToUpper() == "Y")
             {
-            //    timeStamp(folder);
+                Console.WriteLine("Stamping by file name: ...");
+                if_stamped = true;
+                timeStamp(folder);
+                folder += "\\stamp";
             }
             Console.WriteLine("Do you want to limit the frames per day? (y/N):");
             if (Console.ReadLine().ToUpper() == "Y")
@@ -178,10 +185,9 @@ namespace TimelapseBuilder
             }
             return filesFound.ToArray();
         }
-
         static void timeStamp(string folder)
         {
-            string searchFolder = folder;
+            string searchFolder = folder;//Directory.GetCurrentDirectory() + "\\" + folder;
             var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp" };
             var files = getImages(searchFolder, filters, false);
 
@@ -196,27 +202,71 @@ namespace TimelapseBuilder
                     using (MagickImageCollection images = new MagickImageCollection())
                     {
                         MagickImage first = new MagickImage(files[i]);
-
                         first.Resize(new MagickGeometry(0, 0, 600, 600));
-                        Console.WriteLine(first.Width + ", " + first.Height);
-
                         images.Add(first);
 
-                        using (MagickImage image = new MagickImage(new MagickColor(255,255,255,0), 600, 600))
+                        using (MagickImage image = new MagickImage(new MagickColor(255, 255, 255, 0), 480, 580))
                         {
 
                             int index = filesFound[i].Split('\\').Length - 1;
-                            Console.WriteLine(filesFound[i].Split('\\')[index]);
-
+                           // Console.WriteLine(filesFound[i].Split('\\')[index]);
+                            int month_int = int.Parse(filesFound[i].Split('\\')[index].Substring(4, 2));
+                            string year = filesFound[i].Split('\\')[index].Substring(0, 4);//.Split('_')[1].Substring(0, 4);
+                          //filesFound[i].Split('\\')[index].Split('-')[1];
+                          //  Console.WriteLine("y:" + year + ", m:" + month);
+                         //   Console.Read();
+                            string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month_int);
+                            string text = month + "\n" + year + "\n";
+                            if (month_int >= 10)
+                            {
+                                water_year = int.Parse(year);
+                            }
+                            MagickColor color = new MagickColor();
+                            switch (water_year)
+                            {
+                                case 2008:
+                                    color = MagickColors.PaleVioletRed;
+                                    break;
+                                case 2009:
+                                    color = MagickColors.Red;
+                                    break;
+                                case 2010:
+                                    color = MagickColors.OrangeRed;
+                                    break;
+                                case 2011:
+                                    color = MagickColors.Orange;
+                                    break;
+                                case 2012:
+                                    color = MagickColors.Yellow;
+                                    break;
+                                case 2013:
+                                    color = MagickColors.GreenYellow;
+                                    break;
+                                case 2014:
+                                    color = MagickColors.Green;
+                                    break;
+                                case 2015:
+                                    color = MagickColors.Turquoise;
+                                    break;
+                                case 2016:
+                                    color = MagickColors.Blue;
+                                    break;
+                                case 2017:
+                                    color = MagickColors.LightBlue;
+                                    break;
+                                case 2018:
+                                    color = MagickColors.White;
+                                    break;
+                            }
+                            // {-----}
                             new Drawables()
                               // Draw text on the image
-                              .FontPointSize(72)
+                              .FontPointSize(50)
                               .Font("Comic Sans")
                               .StrokeColor(new MagickColor("black"))
-                              .FillColor(MagickColors.Orange)
+                              .FillColor(color)
                               .TextAlignment(TextAlignment.Left)
-                              .Text(0, 504, filesFound[i].Split('\\')[index].Split('_')[0])
-                              // Add an ellipse
+                              .Text(80, 500, text)
                               .Draw(image);
 
                             images.Add(image);
@@ -225,7 +275,7 @@ namespace TimelapseBuilder
                             using (IMagickImage result = images.Mosaic())
                             {
                                 // Save the result
-                                result.Write(Directory.GetCurrentDirectory() + "\\StampedData\\" + filesFound[i].Split('\\')[index]);
+                                result.Write(folder + "\\stamp\\" + filesFound[i].Split('\\')[index]);
                             }
                         }
 
