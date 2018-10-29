@@ -115,7 +115,7 @@ namespace TimelapseBuilder
         {
 
             string searchFolder = folder; //Directory.GetCurrentDirectory() + "\\" + folder;
-            var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp" };
+            var filters = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "tif", "bmp" };
             var files = getImages(searchFolder, filters, false);
 
             using (MagickImageCollection collection = new MagickImageCollection())
