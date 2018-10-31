@@ -31,11 +31,12 @@ namespace TimelapseBuilder
         static List<String> filesFound = new List<String>();
         static int water_year = 2008;
         static int time_bounds_low = 6;
-        static int time_bounds_high = 19;
+        static int time_bounds_high = 18;
         static bool using_time_bounds = false;
         static bool using_one_a_day = false;
         static bool using_three_a_day = false;
         static bool using_range = false;
+        static bool using_month = false;
         static int start_month;
         static int start_day;
         static int end_month;
@@ -75,12 +76,16 @@ namespace TimelapseBuilder
             Console.WriteLine("Do you want to limit the frames per day? (y/N):");
             if (Console.ReadLine().ToUpper() == "Y")
             {
-                Console.WriteLine("Options:\n(\"range\",\"daytime\", \"one-a-day\", \"three-a-day\"):");
+                Console.WriteLine("Options:\n(\"range\",\"month\",\"daytime\", \"one-a-day\", \"three-a-day\"):");
                 
                 string input = Console.ReadLine();
                 switch (input)
                 {
-
+                    case "month":
+                        Console.WriteLine("Checking for a range of dates...\n Month (1-12):");
+                        start_month = int.Parse(Console.ReadLine());
+                        using_month = true;
+                        break;
                     case "range":
                         Console.WriteLine("Checking for a range of dates...\n Starting Month (1-12):");
                         start_month = int.Parse(Console.ReadLine());
@@ -147,6 +152,17 @@ namespace TimelapseBuilder
                 {
                     MagickImageInfo info = new MagickImageInfo(files[i]);
                     DateTime written_time = new FileInfo(files[i]).LastWriteTime;
+                    if (using_month)
+                    {
+                        if (written_time.Month != start_month)
+                        {
+                            continue;
+                        }
+                        if (written_time.Hour <= time_bounds_low || written_time.Hour >= time_bounds_high) //remove 8pm to 5am
+                        {
+                            continue;
+                        }
+                    }
                     if (using_range && written_time.Month >= start_month && written_time.Month <= end_month)
                     {
                         if (written_time.Month == start_month && written_time.Day < start_day)
