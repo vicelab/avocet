@@ -205,7 +205,7 @@ namespace TimelapseBuilder
                 Console.Clear();
                 Console.WriteLine("Added Images, Optimizing... \n (this make take some time)");
                 
-                collection.Optimize();
+                //collection.Optimize();
                 
                
                 Console.Clear();
