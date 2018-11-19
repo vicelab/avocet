@@ -75,7 +75,7 @@ namespace LatLongFixer
 
             /* Remove points outside of acceptable range */
             List<int> points_to_be_zeroed = new List<int>();            
-            for (int i = 1; i < lines.Length; i += 1)
+            for (int i = 4; i < lines.Length; i += 4)
             {
                 prev_line = lines[i - 1].Split('	');
                 line = lines[i].Split('	');
@@ -84,7 +84,8 @@ namespace LatLongFixer
                 x = Math.Abs(double.Parse(line[1]) - double.Parse(prev_line[1]));
                 y = Math.Abs(double.Parse(line[2]) - double.Parse(prev_line[2]));
                 dist = Math.Sqrt((x * x) + (y * y));
-
+                Console.WriteLine(i + " " + dist);
+                Console.ReadLine();
                 /* Check if distance is out of range */
                 if (dist > .001 || dist < .000000001)
                 {
