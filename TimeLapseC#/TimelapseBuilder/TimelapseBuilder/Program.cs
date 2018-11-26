@@ -275,37 +275,37 @@ namespace TimelapseBuilder
                             switch (water_year)
                             {
                                 case 2008:
-                                    color = MagickColors.PaleVioletRed;
+                                    color = MagickColors.Black;
                                     break;
                                 case 2009:
-                                    color = MagickColors.Red;
+                                    color = MagickColors.White;
                                     break;
                                 case 2010:
-                                    color = MagickColors.OrangeRed;
+                                    color = MagickColors.Black;
                                     break;
                                 case 2011:
-                                    color = MagickColors.Orange;
+                                    color = MagickColors.White;
                                     break;
                                 case 2012:
-                                    color = MagickColors.Yellow;
+                                    color = MagickColors.Black;
                                     break;
                                 case 2013:
-                                    color = MagickColors.GreenYellow;
+                                    color = MagickColors.White;
                                     break;
                                 case 2014:
-                                    color = MagickColors.Green;
+                                    color = MagickColors.Black;
                                     break;
                                 case 2015:
-                                    color = MagickColors.Turquoise;
+                                    color = MagickColors.White;
                                     break;
                                 case 2016:
-                                    color = MagickColors.Blue;
+                                    color = MagickColors.Black;
                                     break;
                                 case 2017:
-                                    color = MagickColors.LightBlue;
+                                    color = MagickColors.White;
                                     break;
                                 case 2018:
-                                    color = MagickColors.White;
+                                    color = MagickColors.Black;
                                     break;
                             }
                             // {-----}
@@ -316,7 +316,7 @@ namespace TimelapseBuilder
                               .StrokeColor(new MagickColor("black"))
                               .FillColor(color)
                               .TextAlignment(TextAlignment.Left)
-                              .Text(80, 500, text)
+                              .Text(40, 400, text)
                               .Draw(image);
 
                             images.Add(image);
