@@ -316,7 +316,7 @@ namespace TimelapseBuilder
                               .StrokeColor(new MagickColor("black"))
                               .FillColor(color)
                               .TextAlignment(TextAlignment.Left)
-                              .Text(40, 400, text)
+                              .Text(20, 460, text)
                               .Draw(image);
 
                             images.Add(image);
