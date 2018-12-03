@@ -20,16 +20,15 @@ library(tiff)
 library(RStoolbox)
 
 ##Edit these parameters
-folder = "D:\\IMAGES\\AVO_Images\\AVO_PScope4\\WY2018_AVO_PScope4\\images\\use"
-shape_file = "D:\\IMAGES\\MAPFILES\\AVO_map.shp"
+folder = "C:\\Users\\bhungerman\\Desktop\\more" #"G:\\IMAGES\\AVO_Images\\AVO_RapidEye\\AVOCET_RapidEye\\images"
 file_type = ".tif"
 plot_type = "CROP"
 
-## Grab shapefile
+# new_extent <- extent(730353.61, 734353.22, 4141247.64, 4146424.20)              #AVO_BOUNDS
+new_extent <- extent(732522.62507370487,732970.81861195061, 4143542.0276828129, 4143994.6915609557) #AVO_POND
+# new_extent <- extent(731670.09419491375, 733097.07568875398,4142928.9240985578, 4144526.1959072393) #AVO_MODEL_BOUNDARY
+# new_extent <- extent(731932.57051903661,732454.46218781825, 4140883.8773284461, 4141306.550048789) #3WILLOWS_POND
 
-# Hardcoded conversion from:
-# -120.39796829223633, -120.35119056701662,37.38939058570166, 37.4349990269749);
-new_extent <- extent(730353.61, 734353.22, 4141247.64,4146424.20)
 class(new_extent)
 setwd(folder);
 
@@ -51,9 +50,9 @@ lapply(files, function(file) {
   png(paste(file,"-",plot_type,".png", sep=""))
   plotRGB(output)
   dev.off()
-    
+  
   # outfile <- writeRaster(output, filename=paste(file,"-",plot_type,file_type, sep=""), format="GTiff", overwrite=TRUE,options=c("INTERLEAVE=BAND","COMPRESS=LZW"))
-
+  
 })
 
 
