@@ -10,13 +10,17 @@ See for outputted content produced from the TimeLapse script
 
 A convenient shell script to convert outputted GIFs to MP4s. 
 
+### Parameters (TimeLapse.exe)
+> + Input: a GIF named "output.gif" in same directory.
+> + Output: a MP4 named "output.mp4" in same directory.
+
 ## TimelapseBuilder:
 
 The C#.NET console application. Visual Studio 2017 recommended when opening .sln file.
 
 ### Program.cs:
 
-The Main script, see for changing hardcoded parameters (not required for typical use cases). 
+The Main script, see for changing hardcoded parameters (not required for typical use cases). To update .exe, the file must be reran in Vistual Studio. Doing so will update TimelapseBuilder.exe. 
 
 ### TimelapseBuilder.exe:
 
