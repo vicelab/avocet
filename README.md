@@ -23,12 +23,12 @@ Mass-indexing TIFs for NDVI, NDWI, etc., and exporting as PDF, PNG, etc.
 Generating GIFs from PNGs, with support for adding time-stamps for Planet imagery, as well as customized video parameters.
 
 ### Parameters (TimeLapse.exe)
-Speed: integer (10 is most commonly used)
-Folder: string (e.g. "C:\folder_of_tifs")
-Timestamps: boolean (optional for Planet TIFs)
-Frames per Day: string
-    "range": start to end dates
-    "month": month start to end
-    "daytime": remove night/dark images
-    "one-a-day": select one (noon) image per day, reducing stutter
-    "three-a-day": 9am, 12pm, 3pm images per day, reducing stutter
+> + Speed: integer (10 is most commonly used)
+> + Folder: string (e.g. "C:\folder_of_tifs")
+> + Timestamps: boolean (optional for Planet TIFs)
+> + Frames per Day: string
+>   + "range": start to end dates
+>   + "month": month start to end
+>   + "daytime": remove night/dark images
+>   + "one-a-day": select one (noon) image per day, reducing stutter
+>   + "three-a-day": 9am, 12pm, 3pm images per day, reducing stutter
