@@ -48,7 +48,7 @@ namespace TimelapseBuilder
         {
             /* Init Variables */
             string folder = "PlanetData";
-            int speed = 4;//2;
+            int speed = 0; 
             int width = 600;
 
             /* Get Introduction */
@@ -59,10 +59,6 @@ namespace TimelapseBuilder
 
             Console.WriteLine("Enter target folder: \n(\"C:\\Users\\Example\\Pictures\\Avocet\"");
             folder = Console.ReadLine();
-
-            /* If there are any TIF images, converts to PNG first */
-            /* This shouldn't be the case anymore since the R script can output as png*/
-            //convertTIFtoPNG(folder);
 
             /* Add timestamps to each image?*/
             Console.WriteLine("Do you want timestamps? (y/N):");

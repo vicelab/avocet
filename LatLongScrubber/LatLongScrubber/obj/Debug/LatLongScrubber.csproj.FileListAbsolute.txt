@@ -1,0 +1,7 @@
+C:\Users\Mutilar\Documents\GitHub\AVOCET\LatLongScrubber\LatLongScrubber\bin\Debug\LatLongScrubber.exe.config
+C:\Users\Mutilar\Documents\GitHub\AVOCET\LatLongScrubber\LatLongScrubber\bin\Debug\LatLongScrubber.exe
+C:\Users\Mutilar\Documents\GitHub\AVOCET\LatLongScrubber\LatLongScrubber\bin\Debug\LatLongScrubber.pdb
+C:\Users\Mutilar\Documents\GitHub\AVOCET\LatLongScrubber\LatLongScrubber\obj\Debug\LatLongScrubber.csprojAssemblyReference.cache
+C:\Users\Mutilar\Documents\GitHub\AVOCET\LatLongScrubber\LatLongScrubber\obj\Debug\LatLongScrubber.csproj.CoreCompileInputs.cache
+C:\Users\Mutilar\Documents\GitHub\AVOCET\LatLongScrubber\LatLongScrubber\obj\Debug\LatLongScrubber.exe
+C:\Users\Mutilar\Documents\GitHub\AVOCET\LatLongScrubber\LatLongScrubber\obj\Debug\LatLongScrubber.pdb

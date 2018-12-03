@@ -1,0 +1,11 @@
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\bin\Debug\TimelapseBuilder.exe.config
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\bin\Debug\TimelapseBuilder.exe
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\bin\Debug\TimelapseBuilder.pdb
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\bin\Debug\Magick.NET-Q16-x86.dll
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\bin\Debug\Magick.NET-Q16-x86.xml
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\obj\Debug\TimelapseBuilder.csprojAssemblyReference.cache
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\obj\Debug\TimelapseBuilder.csproj.CoreCompileInputs.cache
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\obj\Debug\TimelapseBuilder.csproj.CopyComplete
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\obj\Debug\TimelapseBuilder.exe
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\obj\Debug\TimelapseBuilder.pdb
+C:\Users\Mutilar\Documents\GitHub\AVOCET\TimeLapseC#\TimelapseBuilder\TimelapseBuilder\bin\Debug\Magick.NET-Q16-x86.Native.dll
